@@ -6,7 +6,7 @@ from PIL import ImageTk, Image
 
 def resize(image, x):
     w, h = image.size
-    return image.resize((x, int(h*x/w)), Image.BILINEAR)
+    return image.resize((x, int(h*x/w)), Image.Resampling.BILINEAR)
 
 class ImageViewer:
     def __init__(self, root):
