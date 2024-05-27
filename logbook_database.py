@@ -1,7 +1,7 @@
 import sqlite3
 
+# Anbindung an SQLite-Datenbank
 def create_connection(db_file):
-    """Erstelle eine Datenbankverbindung zu einer SQLite-Datenbank"""
     conn = None
     try:
         conn = sqlite3.connect(db_file)
@@ -10,8 +10,8 @@ def create_connection(db_file):
         print(e)
     return conn
 
+# Erstellen der Datenbank
 def create_table(conn):
-    """Erstelle die Tabelle für das Logbuch"""
     try:
         sql_create_log_table = """CREATE TABLE IF NOT EXISTS log (
                                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -22,16 +22,16 @@ def create_table(conn):
     except sqlite3.Error as e:
         print(e)
 
+# Hinzufügen eines Eintrags
 def insert_entry(conn, entry):
-    """Füge einen neuen Eintrag in das Logbuch ein"""
     sql = '''INSERT INTO log(entry) VALUES(?)'''
     cur = conn.cursor()
     cur.execute(sql, (entry,))
     conn.commit()
     return cur.lastrowid
 
+# Laden der vorhandenen Einträge
 def fetch_entries(conn):
-    """Hole alle Einträge aus dem Logbuch"""
     cur = conn.cursor()
     cur.execute("SELECT * FROM log")
     rows = cur.fetchall()
